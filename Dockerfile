@@ -22,4 +22,5 @@ COPY start.sh /start.sh
 RUN chmod 744 /start.sh
 
 # コンテナ起動時に実行されるコマンド
+RUN RAILS_ENV=production rails assets:precompile
 CMD ["sh", "/start.sh"]
