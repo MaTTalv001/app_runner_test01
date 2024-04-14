@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.ECR_REPOSITORY }} .
+          docker build --build-arg SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }} -t app_runner002 .
 
       - name: Tag Docker image
         run: |

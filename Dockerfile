@@ -22,5 +22,7 @@ COPY start.sh /start.sh
 RUN chmod 744 /start.sh
 
 # コンテナ起動時に実行されるコマンド
+ARG SECRET_KEY_BASE
+ENV SECRET_KEY_BASE $SECRET_KEY_BASE
 RUN RAILS_ENV=production rails assets:precompile
 CMD ["sh", "/start.sh"]
