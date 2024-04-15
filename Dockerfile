@@ -7,6 +7,11 @@ RUN apt-get update -qq && apt-get install -y build-essential default-mysql-clien
 # 作業ディレクトリの設定
 WORKDIR /app
 
+# 環境変数の設定
+ARG SECRET_KEY_BASE
+ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
+ENV RAILS_ENV=production
+
 # GemfileとGemfile.lockをコンテナ内にコピー
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
@@ -17,12 +22,12 @@ RUN bundle install
 # ホストのファイルをコンテナ内の作業ディレクトリにコピー
 COPY . /app
 
+# アセットプリコンパイル
+RUN rails assets:precompile
+
 # スタートアップスクリプトをコンテナ内にコピーし、実行権限を設定
 COPY start.sh /start.sh
 RUN chmod 744 /start.sh
 
 # コンテナ起動時に実行されるコマンド
-ARG SECRET_KEY_BASE
-ENV SECRET_KEY_BASE $SECRET_KEY_BASE
-RUN RAILS_ENV=production rails assets:precompile
 CMD ["sh", "/start.sh"]
