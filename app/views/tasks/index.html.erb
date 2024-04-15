@@ -6,7 +6,7 @@
   <% @tasks.each do |task| %>
     <li>
       <%= task.title %>
-      <%= link_to 'Delete',  task, data: { turbo_method: :delete, confirm: 'Are you sure?' } %>
+      <%= link_to 'Delete Task',  task, data: { turbo_method: :delete, confirm: 'Are you sure?' } %>
     </li>
   <% end %>
 </ul>
